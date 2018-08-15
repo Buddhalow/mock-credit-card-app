@@ -2,12 +2,32 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import numeral from 'numeral'
 
+import {
+  Row,
+  Col,
+  Card,
+  CardHeader,
+  CardImg,
+  CardText,
+  CardBody,
+  CardTitle,
+  CardFooter,
+  Button
+} from 'reactstrap';
+
 const BigNumber = ({value, name, description}) => {
 	return (
-		<div style={{alignItems: 'center', padding: 20}}>
-			<p style={{textAlign: 'center'}}>{name}</p>
-			<p style={{fontSize: 20, textAlign: 'center'}}>{numeral(value).format('0.0:00')}</p>
-			{description && <Text style={{textAlign: 'center'}}>{description}</Text>}
+		<div>
+			<Card>
+				<CardHeader>{name}</CardHeader>
+				<CardBody>
+					<CardText>{numeral(value).format('0,0.00') + ' SEK'}</CardText>
+				</CardBody>
+				<CardFooter>
+					{description && <small style={{textAlign: 'center'}}>{description}</small>}
+			
+				</CardFooter>
+			</Card>
 		</div>
 	)
 }

@@ -12,7 +12,6 @@ import {
 import Loading from './Loading';
 import Error from './Error';
 import Header from './Header';
-import Spacer from './Spacer';
 import { Link } from 'react-router-dom';
 
 const InvoiceListing = ({

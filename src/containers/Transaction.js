@@ -1,9 +1,8 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { View } from 'react-native'
 
-import { getInvoices, setError } from '../actions/collectify';
+import { getTransaction, setError } from '../actions/collectify';
 
 class Transaction extends Component {
   static propTypes = {
@@ -40,7 +39,6 @@ class Transaction extends Component {
 
   render = () => {
     const { Layout, collectify, match } = this.props;
-    if (!collectify.account) return <View></View>
     let transaction = collectify.account.transactions[this.props.match.id]
     return (
       <Layout
@@ -58,7 +56,6 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = {
   fetchTransaction: getTransaction,
-  fetchMeals: getMeals,
   showError: setError,
 };
 

@@ -36,6 +36,11 @@ import TransactionViewComponent from '../components/Transaction';
 import InvoiceContainer from '../../containers/Invoice';
 import InvoiceViewComponent from '../components/Invoice';
 
+import DashboardContainer from '../../containers/Dashboard';
+import DashboardComponent from '../components/Dashboard';
+
+import ControlRoomContainer from '../../containers/ControlRoom';
+import ControlRoomComponent from '../components/ControlRoom';
 import Error from '../components/Error';
 
 const Index = () => (

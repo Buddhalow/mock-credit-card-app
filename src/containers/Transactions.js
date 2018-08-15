@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
-import { getTransactions } from '../actions/collectify';
+import { getTransactions, setError } from '../actions/collectify';
 
 class TransactionListing extends Component {
   static propTypes = {

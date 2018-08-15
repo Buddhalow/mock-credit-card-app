@@ -1,7 +1,7 @@
-import moment from 'momen'
+import moment from 'moment'
 
 
-import AsyncStorage from '../storage'
+import { AsyncStorage } from '../storage'
 
 const DATE_FORMAT = 'YYYY-MM-DD'
 
@@ -39,7 +39,7 @@ class Collectify {
 	}
 
 	get account() {
-		return this.state.account
+		return this.data.account
 	}
 
 	get now() {
@@ -133,7 +133,7 @@ class Collectify {
 	createMonthlyInvoice() {
 		if (this.data.account.balance > 0) {
 			this.chargeInterest()
-			await let lowestAmountToPay = this.data.account.balance / 24
+			let lowestAmountToPay = this.data.account.balance / 24
 			if (lowestAmountToPay < 150 && lowestAmountToPay < this.data.account.balance) {
 				lowestAmountToPay = this.data.account.balance
 			}
@@ -210,7 +210,7 @@ class Collectify {
 		this.commit(transaction)
 		
 	}
-	save() {
+	async save() {
 		let strData = JSON.stringify(this.data)
 		await AsyncStorage.setItem('data', strData)
 	}

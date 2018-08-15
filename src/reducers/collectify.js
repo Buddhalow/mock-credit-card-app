@@ -11,7 +11,7 @@ export default function collectifyReducer(state = initialState, action) {
         return newState
       }
     }
-    case 'ACCOUNT_FETCH': {
+    case 'ACCOUNT_GET': {
       if (action.data) {
         let newState = {...state}
         newState.account = action.data

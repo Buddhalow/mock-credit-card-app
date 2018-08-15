@@ -2,7 +2,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import ErrorMessages from '../../constants/errors';
 import Error from './Error';
-import Spacer from './Spacer';
 import numeral from 'numeral'
 import moment from 'moment'
 import {

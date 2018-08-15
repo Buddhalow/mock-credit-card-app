@@ -1,13 +1,46 @@
 import collectify from '../lib/collectify'
-import moment from 'momen'
+import moment from 'moment'
 
 export function getAccount(dispatch) {
 	let account = collectify.account
-	dispatch({
-		type: 'ACCOUNT_GET',
-		data: account
-	})
+	if (dispatch instanceof Function) {
+		dispatch({
+			type: 'ACCOUNT_GET',
+			data: account
+		})
+	} else {
+		return dispatch => {
+			dispatch({
+				type: 'ACCOUNT_GET',
+				data: account
+			})
+		} 
+	}
 }
+
+export function fetchAccount() {
+	
+	return dispatch => {
+		return new Promise((resolve, reject) => {
+			let account = collectify.account
+			console.log(account)
+			return resolve(
+				dispatch({
+					type: 'ACCOUNT_GET',
+					data: account
+				})
+			)
+		})
+	} 
+
+}
+
+// For now we store everything in a single variable, so we fetch from fetchAccount
+export let fetchInvoice = fetchAccount
+
+export let fetchInvoices = fetchAccount
+export let fetchTransaction = fetchAccount
+export let fetchTransactions = fetchAccount
 
 export function getTransactions() {
 	return dispatch => {
@@ -15,6 +48,14 @@ export function getTransactions() {
 	}
 }
 
+export function setError(error) {
+	return dispatch => {
+		dispatch({
+			type: 'COLLECTIFY_ERROR',
+			data: error
+		})
+	}
+}
 
 export function getInvoices() {
 	return dispatch => {
@@ -82,6 +123,6 @@ export function setDate(time) {
 		collectify.now = time
 		collectify.save().then(() => {
 			getAccount(dispatch)
-		}
+		})
 	}
 }

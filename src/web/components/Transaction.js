@@ -2,7 +2,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import ErrorMessages from '../../constants/errors';
 import Error from './Error';
-import Spacer from './Spacer';
 import numeral from 'numeral'
 import moment from 'moment'
 import {
@@ -27,13 +26,13 @@ const TransactionView = ({
   );
 };
 
-InvoiceView.propTypes = {
+TransactionView.propTypes = {
   error: PropTypes.string,
   amount: PropTypes.number.isRequired,
   transaction: PropTypes.shape()
 };
 
-InvoiceView.defaultProps = {
+TransactionView.defaultProps = {
   error: null,
 };
 

@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
-import { getAccount, setError } from '../actions/collectify';
+import { fetchAccount, setError } from '../actions/collectify';
 
 class Dashboard extends Component {
   static propTypes = {
@@ -23,12 +23,12 @@ class Dashboard extends Component {
     match: null,
   }
 
-  componentDidMount = () => this.fetchInvoice();
+  componentDidMount = () => this.fetchDashboard();
 
   /**
     * Fetch Data from API, saving to Redux
     */
-  fetchAccount = () => {
+  fetchDashboard = () => {
     const { fetchAccount, showError } = this.props;
     return fetchAccount(this.props.match.id)
       .catch((err) => {
@@ -39,6 +39,7 @@ class Dashboard extends Component {
 
   render = () => {
     const { Layout, collectify, match } = this.props;
+    console.log(collectify)
     return (
       <Layout
         error={collectify.error}
@@ -54,7 +55,7 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = {
-  fetchAccount: getAccount,
+  fetchAccount: fetchAccount,
   showError: setError,
 };
 

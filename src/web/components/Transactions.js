@@ -15,7 +15,6 @@ import { Link } from 'react-router-dom';
 import Loading from './Loading';
 import Error from './Error';
 import Header from './Header';
-import Spacer from './Spacer';
 
 const TransactionListing = ({
   error,
@@ -41,7 +40,7 @@ const TransactionListing = ({
           content="Latest transactions on your account"
         />
 
-        <table>
+        <table width="100%" className="table">
           <thead>
             <tr>
               <th>Transaction</th>
@@ -63,7 +62,6 @@ const TransactionListing = ({
           ))}
           </tbody>
         </table>
-        <Spacer size={20} />
       </Col>
     </Row>
   );

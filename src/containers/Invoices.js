@@ -57,7 +57,6 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = {
   fetchInvoices: getInvoices,
-  fetchMeals: getMeals,
   showError: setError,
 };
 
