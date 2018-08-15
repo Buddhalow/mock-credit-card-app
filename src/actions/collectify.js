@@ -1,67 +1,70 @@
 import collectify from '../lib/collectify'
+import moment from 'momen'
 
-export function getAccount() {
-	return dispatch => {
-		collectify.getAccount().then((account) => {
-			dispatch({
-				type: 'ACCOUNT_GET',
-				data: account
-			})
-		}
-	}
+export function getAccount(dispatch) {
+	let account = collectify.account
+	dispatch({
+		type: 'ACCOUNT_GET',
+		data: account
+	})
 }
 
 export function getTransactions() {
 	return dispatch => {
-		collectify.getAccount().then((account) => {
-			dispatch({
-				type: 'ACCOUNT_GET',
-				data: account
-			})
-		}
+		getAccount(dispatch)
 	}
 }
 
 
 export function getInvoices() {
 	return dispatch => {
-		collectify.getAccount().then((account) => {
-			dispatch({
-				type: 'ACCOUNT_GET',
-				data: account
-			})
-		}
+			getAccount(dispatch)
+		
 	}
 }
 
 export function authorize(transaction) {
 	return dispatch => {
-		collectify.authorize(transaction).then((result) => {)
-			fetchAccount(dispatch)
+		collectify.authorize(transaction)
+		collectify.save().then((resolve, fail) => {
+			getAccount(dispatch)
 		})
 	}
 }
 
 export function charge(transactionId) {
 	return dispatch => {
-		collectify.charge(transactionId).then((result) => {)
-			fetchAccount(dispatch)
+		collectify.charge(transactionId)
+		collectify.save().then((result) => {
+			getAccount(dispatch)
 		})
 	}
 }
 
 export function issueInvoice(invoice) {
 	return dispatch => {
-		collectify.issueInvoice(invoice).then((result) => {)
-			fetchAccount(dispatch)
+		collectify.issueInvoice(invoice)
+		collectify.save().then((result) => {
+			getAccount(dispatch)
 		})
 	}
 }
 
-export function pay(payment) {
+export function payInvoice(invoiceId, amount) {
 	return dispatch => {
-		collectify.pay(amount).then((result) => {)
-			fetchAccount(dispatch)
+		collectify.payInvoice(invoiceId, amount)
+		collectify.save().then((result) => {
+			getAccount(dispatch)
 		})
+	}
+}
+
+export function setDate(time) {
+	return dispatch => {
+		let time = moment(time)
+		collectify.now = time
+		collectify.save().then(() => {
+			getAccount(dispatch)
+		}
 	}
 }
