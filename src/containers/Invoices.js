@@ -2,20 +2,20 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
-import { getTransactions } from '../actions/collectify';
+import { getInvoices, setError } from '../actions/collectify';
 
-class TransactionListing extends Component {
+class InvoiceListing extends Component {
   static propTypes = {
     Layout: PropTypes.func.isRequired,
     collectify: PropTypes.shape({
       loading: PropTypes.bool.isRequired,
       error: PropTypes.string,
-      transactions: PropTypes.arrayOf(PropTypes.shape()).isRequired,
+      invoices: PropTypes.arrayOf(PropTypes.shape()).isRequired,
     }).isRequired,
     match: PropTypes.shape({
       params: PropTypes.shape({}),
     }),
-    fetchTransactions: PropTypes.func.isRequired,
+    fetchInvoices: PropTypes.func.isRequired,
     showError: PropTypes.func.isRequired,
   }
 
@@ -23,14 +23,14 @@ class TransactionListing extends Component {
     match: null,
   }
 
-  componentDidMount = () => this.fetchTransactions();
+  componentDidMount = () => this.fetchInvoices();
 
   /**
     * Fetch Data from API, saving to Redux
     */
-  fetchTransactions = () => {
-    const { fetchTransactions, showError } = this.props;
-    return fetchTransactions()
+  fetchInvoices = () => {
+    const { fetchInvoices, showError } = this.props;
+    return fetchInvoices()
       .catch((err) => {
         console.log(`Error: ${err}`);
         return showError(err);
@@ -38,14 +38,14 @@ class TransactionListing extends Component {
   }
 
   render = () => {
-    const { Layout, collectify } = this.props;
+    const { Layout, collectify, match } = this.props;
 
     return (
       <Layout
         error={collectify.error}
         loading={collectify.loading}
-        transactions={collectify.transactions}
-        reFetch={() => this.fetchTransactions()}
+        invoices={collectify.invoices}
+        reFetch={() => this.fetchRecipes()}
       />
     );
   }
@@ -56,8 +56,9 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = {
-  fetcTransactions: getTransactions,
+  fetchInvoices: getInvoices,
+  fetchMeals: getMeals,
   showError: setError,
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(TransactionListing);
+export default connect(mapStateToProps, mapDispatchToProps)(InvoiceListing);

@@ -12,7 +12,7 @@ import Error from './Error';
 import Header from './Header';
 import Spacer from './Spacer';
 
-const TransactionsListing = ({
+const TransactionListing = ({
   error,
   loading,
   transactions,
@@ -58,7 +58,10 @@ const TransactionsListing = ({
                 <Body>
                   <Spacer size={10} />
                   <Text style={{ fontWeight: '800' }}>
-                    {item.title}
+                    {item.amount}
+                  </Text>
+                  <Text style={{ fontWeight: '800', fontSize: 10 }}>
+                    {item.name}
                   </Text>
                   <Spacer size={15} />
                   <Button
@@ -68,7 +71,7 @@ const TransactionsListing = ({
                     onPress={() => onPress(item)}
                   >
                     <Text>
-                      View Recipe
+                      View
                     </Text>
                   </Button>
                   <Spacer size={5} />
@@ -91,16 +94,16 @@ const TransactionsListing = ({
   );
 };
 
-RecipeListing.propTypes = {
+TransactionListing.propTypes = {
   error: PropTypes.string,
   loading: PropTypes.bool.isRequired,
-  recipes: PropTypes.arrayOf(PropTypes.shape()).isRequired,
+  transactions: PropTypes.arrayOf(PropTypes.shape()).isRequired,
   reFetch: PropTypes.func,
 };
 
-RecipeListing.defaultProps = {
+TransactionListing.defaultProps = {
   error: null,
   reFetch: null,
 };
 
-export default RecipeListing;
+export default TransactionListing;

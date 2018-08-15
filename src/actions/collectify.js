@@ -11,14 +11,27 @@ export function getAccount() {
 	}
 }
 
-export function fetchAccount(dispatch) {
-	collectify.getAccount().then((account) => {
-		dispatch({
-			type: 'ACCOUNT_GET',
-			data: account
-		})
+export function getTransactions() {
+	return dispatch => {
+		collectify.getAccount().then((account) => {
+			dispatch({
+				type: 'ACCOUNT_GET',
+				data: account
+			})
+		}
 	}
-	
+}
+
+
+export function getInvoices() {
+	return dispatch => {
+		collectify.getAccount().then((account) => {
+			dispatch({
+				type: 'ACCOUNT_GET',
+				data: account
+			})
+		}
+	}
 }
 
 export function authorize(transaction) {

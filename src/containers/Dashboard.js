@@ -2,20 +2,20 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
-import { getTransactions } from '../actions/collectify';
+import { getAccount, setError } from '../actions/collectify';
 
-class TransactionListing extends Component {
+class Dashboard extends Component {
   static propTypes = {
     Layout: PropTypes.func.isRequired,
     collectify: PropTypes.shape({
       loading: PropTypes.bool.isRequired,
       error: PropTypes.string,
-      transactions: PropTypes.arrayOf(PropTypes.shape()).isRequired,
+      account: PropTypes.arrayOf(PropTypes.shape()).isRequired,
     }).isRequired,
     match: PropTypes.shape({
       params: PropTypes.shape({}),
     }),
-    fetchTransactions: PropTypes.func.isRequired,
+    fetchAccount: PropTypes.func.isRequired,
     showError: PropTypes.func.isRequired,
   }
 
@@ -23,14 +23,14 @@ class TransactionListing extends Component {
     match: null,
   }
 
-  componentDidMount = () => this.fetchTransactions();
+  componentDidMount = () => this.fetchInvoice();
 
   /**
     * Fetch Data from API, saving to Redux
     */
-  fetchTransactions = () => {
-    const { fetchTransactions, showError } = this.props;
-    return fetchTransactions()
+  fetchAccount = () => {
+    const { fetchAccount, showError } = this.props;
+    return fetchAccount(this.props.match.id)
       .catch((err) => {
         console.log(`Error: ${err}`);
         return showError(err);
@@ -38,14 +38,12 @@ class TransactionListing extends Component {
   }
 
   render = () => {
-    const { Layout, collectify } = this.props;
-
+    const { Layout, collectify, match } = this.props;
     return (
       <Layout
         error={collectify.error}
         loading={collectify.loading}
-        transactions={collectify.transactions}
-        reFetch={() => this.fetchTransactions()}
+        account={collectify.account}
       />
     );
   }
@@ -56,8 +54,8 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = {
-  fetcTransactions: getTransactions,
+  fetchAccount: getAccount,
   showError: setError,
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(TransactionListing);
+export default connect(mapStateToProps, mapDispatchToProps)(Dashboard);
