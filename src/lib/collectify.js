@@ -7,6 +7,7 @@ class Collectify {
 			this.data = JSON.parse(strData)
 		} else {
 			this.data = {
+				time: '2018-08-18 00:00:00',
 				account: {
 				  	country: 'se',
 				  	currency: 'sek',
@@ -32,6 +33,13 @@ class Collectify {
 
 	get account() {
 		return this.state.account
+	}
+
+	get date() {
+		return moment(this.data.date, 'YYYY-MM-DD h:mm')
+	}
+	set date(value) {
+		this.data.date = moment(value).format('YYYY-MM-DD h:mm')
 	}
 
 	async authorize(amount, name) {
@@ -77,7 +85,7 @@ class Collectify {
 	}
 	chargeInterest() {
 		let interestRate = this.data.account.interestRate
-		let amount = this.data.account.amount * this.data.account.interestRate
+		let amount = this.data.account.amount * (this.data.account.interestRate / 12)
 
 		let transaction = {
 			id: Math.random() * 1000,
