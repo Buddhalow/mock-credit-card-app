@@ -24,6 +24,18 @@ import ForgotPasswordComponent from '../components/ForgotPassword';
 import UpdateProfileContainer from '../../containers/UpdateProfile';
 import UpdateProfileComponent from '../components/UpdateProfile';
 
+import TransactionsContainer from '../../containers/Transactions';
+import TransactionsComponent from '../components/Transactions';
+
+import InvoicesContainer from '../../containers/Invoices';
+import InvoicesComponent from '../components/Invoices';
+
+import TransactionContainer from '../../containers/Transaction';
+import TransactionViewComponent from '../components/Transaction';
+
+import InvoiceContainer from '../../containers/Invoice';
+import InvoiceViewComponent from '../components/Invoice';
+
 import Error from '../components/Error';
 
 const Index = () => (
@@ -33,7 +45,7 @@ const Index = () => (
       path="/"
       render={props => (
         <TemplateSidebar>
-          <Home {...props} />
+          <DashboardContainer {...props} Layout={DashboardComponent} />
         </TemplateSidebar>
       )}
     />
@@ -70,18 +82,34 @@ const Index = () => (
       )}
     />
     <Route
-      path="/recipes"
+      path="/transactions"
       render={props => (
         <TemplateSidebar>
-          <RecipesContainer {...props} Layout={RecipesComponent} />
+          <TransactionsContainer {...props} Layout={TransactionsComponent} />
         </TemplateSidebar>
       )}
     />
     <Route
-      path="/recipe/:id"
+      path="/transaction/:id"
       render={props => (
         <TemplateSidebar>
-          <RecipesContainer {...props} Layout={RecipeViewComponent} />
+          <TransactionContainer {...props} Layout={TransactionViewComponent} />
+        </TemplateSidebar>
+      )}
+    />
+    <Route
+      path="/invoices"
+      render={props => (
+        <TemplateSidebar>
+          <InvoicesContainer {...props} Layout={InvoicesComponent} />
+        </TemplateSidebar>
+      )}
+    />
+    <Route
+      path="/invoice/:id"
+      render={props => (
+        <TemplateSidebar>
+          <InvoiceContainer {...props} Layout={InvoiceViewComponent} />
         </TemplateSidebar>
       )}
     />

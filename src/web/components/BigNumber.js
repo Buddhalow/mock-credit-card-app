@@ -1,15 +1,14 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import numeral from 'numeral'
-import { View, Text } from 'react-native'
 
 const BigNumber = ({value, name, description}) => {
 	return (
-		<View style={{alignItems: 'center', padding: 20}}>
-			<Text style={{textAlign: 'center'}}>{name}</Text>
-			<Text style={{fontSize: 20, textAlign: 'center'}}>{numeral(value).format('0.0:00')}</Text>
+		<div style={{alignItems: 'center', padding: 20}}>
+			<p style={{textAlign: 'center'}}>{name}</p>
+			<p style={{fontSize: 20, textAlign: 'center'}}>{numeral(value).format('0.0:00')}</p>
 			{description && <Text style={{textAlign: 'center'}}>{description}</Text>}
-		</View>
+		</div>
 	)
 }
 

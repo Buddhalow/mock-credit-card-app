@@ -1,8 +1,8 @@
 {
   "expo": {
     "sdkVersion": "27.0.0",
-    "name": "Collectify",
-    "slug": "collectify",
+    "name": "Creditfulness",
+    "slug": "creditfulness",
     "icon": "src/images/app-icon.png",
     "privacy": "public"
   }

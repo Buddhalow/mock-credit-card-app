@@ -4,6 +4,13 @@ export const initialState = Store;
 
 export default function collectifyReducer(state = initialState, action) {
   switch (action.type) {
+    case 'COLLECTIFY_ERROR': {
+      if (action.data) {
+        let newState = {...state}
+        newState.error = action.data
+        return newState
+      }
+    }
     case 'ACCOUNT_FETCH': {
       if (action.data) {
         let newState = {...state}

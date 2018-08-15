@@ -25,7 +25,24 @@ export function getInvoices() {
 
 export function authorize(transaction) {
 	return dispatch => {
-		collectify.authorize(transaction)
+		try {
+			collectify.authorize(transaction)
+		} catch (e) {
+			dispatch({
+				type: 'COLLECTIFY_ERROR',
+				data: e.message
+			})
+			return
+		}
+		collectify.save().then((resolve, fail) => {
+			getAccount(dispatch)
+		})
+	}
+}
+
+export function commit(transaction) {
+	return dispatch => {
+		collectify.commit(transaction)
 		collectify.save().then((resolve, fail) => {
 			getAccount(dispatch)
 		})
