@@ -51,13 +51,13 @@ const TransactionListing = ({
           <tbody>
           {transactions.map((item, i) => (
             <tr key={i}>
-              <td>
-                <Link to={`/transaction/{item.id}`}>{item.name}</Link>
-              </td>
-              <td>
-                {numeral(item.amount).format('0.00:00')}
-              </td>
               <td>{moment(item.time).fromNow()}</td>
+              <td>
+                <Link to={`/transaction/${item.id}`}>{item.name}</Link>
+              </td>
+              <td style={{textAlign: 'right'}}>
+                {numeral(item.amount).format('0,00.00')} SEK
+              </td>
             </tr>
           ))}
           </tbody>

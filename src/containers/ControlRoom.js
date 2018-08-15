@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
-import { authorize, commit } from '../actions/collectify';
+import { authorize, commit, trans } from '../actions/collectify';
 
 class ControlRoom extends Component {
   static propTypes = {
@@ -18,9 +18,9 @@ class ControlRoom extends Component {
 
 
   render = () => {
-    const { Layout, authorize, commit, match } = this.props;
+    const { Layout, authorize, commit, trans, match } = this.props;
     return (
-      <Layout authorize={authorize} commit={commit} />
+      <Layout authorize={authorize} commit={commit} trans={trans} />
     );
   }
 }
@@ -31,7 +31,8 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = {
   authorize: authorize,
-  commit: commit
+  commit: commit,
+  trans: trans
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(ControlRoom);

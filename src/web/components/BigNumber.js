@@ -16,15 +16,16 @@ import {
 } from 'reactstrap';
 
 const BigNumber = ({value, name, description}) => {
+	console.log(value)
 	return (
 		<div>
 			<Card>
 				<CardHeader>{name}</CardHeader>
 				<CardBody>
-					<CardText>{numeral(value).format('0,0.00') + ' SEK'}</CardText>
+					<CardText style={{textAlign: 'right'}}>{numeral(value).format('0,0.00') + ' SEK'}<br />{description && <small style={{textAlign: 'center'}}>{description}</small>}</CardText>
 				</CardBody>
 				<CardFooter>
-					{description && <small style={{textAlign: 'center'}}>{description}</small>}
+					
 			
 				</CardFooter>
 			</Card>

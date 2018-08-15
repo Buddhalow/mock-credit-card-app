@@ -119,6 +119,14 @@ const Index = () => (
       )}
     />
     <Route
+      path="/control"
+      render={props => (
+        <TemplateSidebar>
+          <ControlRoomContainer {...props} Layout={ControlRoomComponent} />
+        </TemplateSidebar>
+      )}
+    />
+    <Route
       render={props => (
         <TemplateSidebar>
           <Error {...props} title="404" content="Sorry, the route you requested does not exist" />

@@ -3,7 +3,7 @@ import moment from 'moment'
 
 import { AsyncStorage } from '../storage'
 
-const DATE_FORMAT = 'YYYY-MM-DD'
+const DATE_FORMAT = 'YYYY-MM-DD H:m'
 
 const REMINDER_RATE = 0.105
 
@@ -13,24 +13,28 @@ class Collectify {
 		if (strData) {
 			this.data = JSON.parse(strData)
 		} else {
-			this.data = {
-				now: '2018-08-18 00:00:00',
-				account: {
-				  	country: 'se',
-				  	currency: 'sek',
-				  	id: '9-999 999 999-0',
-				  	name: 'Collectify credit',
-				  	balance: 0,
-				  	interestRate: 10.5,
-				  	acumulatedInterest: 0,
-				  	fees: 0,
-				  	hold: 0,
-				  	credit: 10000,
-				  	reservations: {},
-				  	transactions: {},
-				  	invoices: {}
-			  	}
-			}
+			this.reset()
+			await this.save()
+		}
+	}
+	reset() {
+		this.data = {
+			now: '2018-08-18 00:00:00',
+			account: {
+			  	country: 'se',
+			  	currency: 'sek',
+			  	id: '9-999 999 999-0',
+			  	name: 'Collectify credit',
+			  	balance: 0,
+			  	interestRate: 10.5,
+			  	acumulatedInterest: 0,
+			  	fees: 0,
+			  	hold: 0,
+			  	credit: 10000,
+			  	reservations: {},
+			  	transactions: {},
+			  	invoices: {}
+		  	}
 		}
 	}
 	constructor() {
@@ -118,6 +122,23 @@ class Collectify {
 		transaction.isFinal = true
 		this.data.account.transactions[transaction.id] = transaction
 		this.data.account.balance += amount
+	}
+	trans(amount, name) {
+		let availableFunds = this.data.account.credit - (this.data.account.balance + this.data.account.hold)
+		if (amount > availableFunds) {
+			throw "Insuffient funds"
+		}
+		let transaction = {
+			id: Math.random() * 100000,
+			name: name,
+			amount: amount,
+			type: 'purchase',
+			isFinal: true,
+			time: moment().format(DATE_FORMAT)
+		}
+		this.data.account.transactions[transaction.id] = transaction
+		this.data.account.balance += amount
+		return transaction
 	}
 	pay(amount) {
 		let transaction = {

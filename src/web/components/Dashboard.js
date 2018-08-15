@@ -5,9 +5,9 @@ import Loading from './Loading';
 import Error from './Error';
 import Header from './Header';
 import BigNumber from './BigNumber'
-
+import numeral from 'numeral'
 import TransactionListing from './Transactions'
-
+import ControlRoom from './ControlRoom'
 import {
   Row,
   Col,
@@ -15,27 +15,61 @@ import {
   CardImg,
   CardText,
   CardBody,
+  CardHeader,
   CardTitle,
   CardFooter,
   Button
 } from 'reactstrap';
 
-const Dashboard = ({account, error}) => {
+const Dashboard = ({account, error, authorize, trans, commit}) => {
+	console.log(account)
 	return (
 		<div>
 	       {account && 
+	       		
 	       		<div>
 		       		<h1>{`Dashboard`}</h1>
-	                
 	                <Row>
-	                	<Col md="4">
-	                		<BigNumber value={account.credit - (account.balance + account.reserved)} name={'Available balance'} description={`${account.reserved} reserved`} />
+	                	<Col md="12">	
+	                		<ControlRoom authorize={authorize} commit={commit} trans={trans} />
 	                	</Col>
-	                	<Col md="4">
-	                		<BigNumber value={(account.balance + account.reserved)} name={'Used credit'} />
+	                </Row>
+	                <Row>
+	                	<Col md="12">
+	                	<Card>
+							<CardHeader>{account.name}</CardHeader>
+							<CardBody>
+								<CardText style={{textAlign: 'right'}}>
+									<b>Total credit line</b>
+									<p>{numeral(account.credit).format('0,0.00') + ' SEK'}<br /></p>
+									<b>Balance</b>
+									<p>{numeral(account.credit - account.balance).format('0,0.00') + ' SEK'}<br /></p>
+									<b>Used</b>
+									<p>{numeral(account.balance).format('0,0.00') + ' SEK'}<br /></p>
+									<b>Reserved</b>
+									<p>{numeral(- (account.hold)).format('0,0.00') + ' SEK'}<br /></p>
+									<hr /> 
+									<p>Available</p>
+									{numeral(account.credit - (account.balance + account.hold)).format('0,0.00') + ' SEK'}
+								</CardText>
+							</CardBody>
+							<CardFooter>
+								
+						
+							</CardFooter>
+						</Card>
 	                	</Col>
 	                </Row> 
-	                <TransactionListing transactions={Object.values(account.transactions)} />
+	                <Row>
+	                	<Col md="12">
+	                		<Card>
+	                			<CardHeader>Transactions</CardHeader>
+	                			<CardBody>
+	                				<TransactionListing transactions={Object.values(account.transactions)} />
+	                			</CardBody>
+	                		</Card>
+	                	</Col>
+	                </Row>
                 </div>
            	}
         	{error && <div>We are so sorry but we could not load your account at the moment</div>}

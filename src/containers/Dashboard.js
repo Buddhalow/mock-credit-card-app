@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
-import { fetchAccount, setError } from '../actions/collectify';
+import { fetchAccount, setError, trans, commit, authorize } from '../actions/collectify';
 
 class Dashboard extends Component {
   static propTypes = {
@@ -38,13 +38,16 @@ class Dashboard extends Component {
   }
 
   render = () => {
-    const { Layout, collectify, match } = this.props;
+    const { Layout, collectify, authorize, commit, trans, match } = this.props;
     console.log(collectify)
     return (
       <Layout
         error={collectify.error}
         loading={collectify.loading}
         account={collectify.account}
+        authorize={authorize}
+        commit={commit}
+        trans={trans}
       />
     );
   }
@@ -56,7 +59,10 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = {
   fetchAccount: fetchAccount,
-  showError: setError,
+  showError: setError, 
+  trans, 
+  commit, 
+  authorize
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Dashboard);

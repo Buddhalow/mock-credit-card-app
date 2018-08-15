@@ -4,7 +4,6 @@ import PropTypes from 'prop-types';
 import Loading from './Loading';
 import Error from './Error';
 import Header from './Header';
-import Spacer from './Spacer';
 import BigNumber from './BigNumber'
 import {
   Row,
@@ -18,21 +17,26 @@ import {
   Button
 } from 'reactstrap';
 
-import TransactionListing from './TransactionListing'
-
 class ControlRoom extends React.Component {
 	constructor(props) {
 		super(props)
 		this.state = {
 			authorize: {
 				amount: 0,
-				description: ''
+				name: ''
 			},
 			commit: {
 				amount: 0,
-				description: ''
+				name: ''
 			}
 		}
+	}
+	_onTransClick() {
+		this.props.trans(this.state.authorize.amount, this.state.authorize.name)
+	}
+	_onAuthorizeClick() {
+		this.props.authorize(this.state.authorize)
+
 	}
 	render() {
 		return (
@@ -41,13 +45,13 @@ class ControlRoom extends React.Component {
 				    <CardTitle>Authorize transaction</CardTitle>
 				    <CardBody>
 				    	<label>Amount</label>
-				    	<input type="number" defaultValue={this.state.authorize.amount} onChange={(val) => this.setState({authorize: {amount: val}})} />
+				    	<input type="number" defaultValue={this.state.authorize.amount} onChange={(e) => this.setState({authorize: {...this.state.authorize, amount: parseFloat(e.target.value)}})} />
 				    	<label>Description</label>
-				    	<input type="text" defaultValue={this.state.authorize.description} onChange={(val) => this.setState({authorize: {description: val}})} />
+				    	<input type="text" defaultValue={this.state.authorize.name} onChange={(e) => this.setState({authorize: {...this.state.authorize, name: e.target.value}})} />
 		          	</CardBody>
 		          	<CardFooter>
-		          		<Button onClick={() => this.props.authorize(this.state.authorize)}>Authorize</Button>
-		          		<Button onClick={() => this.props.commit(this.state.authorize)}>Commit</Button>
+		          		<Button onClick={this._onAuthorizeClick.bind(this)}>Authorize</Button>
+		          		<Button onClick={this._onTransClick.bind(this)}>Commit</Button>
 		          	</CardFooter>
 	          	</Card>
 			</Row>
@@ -60,4 +64,4 @@ ControlRoom.propTypes = {
 	error: PropTypes.string
 }
 
-export defaultControlRoom
+export default ControlRoom

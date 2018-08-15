@@ -90,6 +90,15 @@ export function commit(transaction) {
 	}
 }
 
+export function trans(amount, name) {
+	return dispatch => {
+		collectify.trans(amount, name)
+		collectify.save().then((resolve, fail) => {
+			getAccount(dispatch)
+		})
+	}
+}
+
 export function charge(transactionId) {
 	return dispatch => {
 		collectify.charge(transactionId)
